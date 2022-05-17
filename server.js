@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static('public'));
 app.use(express.static(__dirname));
 app.use(express.json());                   // this is for enabling that we are sending json data, as the server doesn't accept it by default
-
+yar
 // this is for building the database
 const connectDB = require('./config/db');
 connectDB();
