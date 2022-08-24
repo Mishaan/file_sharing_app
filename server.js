@@ -2,29 +2,20 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const PORT = process.env.PORT || 3000;
+const cors=require('cors');
 
 app.use(express.static('public'));
 app.use(express.static(__dirname));
 app.use(express.json());
 
-const cors = require('cors');
-// Cors
-// const corsOptions = {
-//   origin: process.env.ALLOWED_CLIENTS
-//   // ['http://localhost:3000', 'http://localhost:5000', 'http://localhost:3300']
-// }
-
-const corsOptions ={
-    origin:'*',
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200,
- }
-
 const connectDB = require('./config/db');
 connectDB();
 
-app.use(cors(corsOptions));
 
+const corsOptions={
+    origin : process.env.ALLOWED_USER.split(',')
+}
+app.use(cors(corsOptions));
 // app.get('/', function (req, res) {
 //     res.sendFile(path.join(__dirname, '/index.html'));
 // });
