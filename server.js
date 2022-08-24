@@ -2,15 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const path = require('path');
+
 // this is for running the server ...
 const PORT = process.env.PORT || 3000;
-
-const cors = require('cors');
-// Cors 
-const corsOptions = {
-  origin: process.env.ALLOWED_CLIENTS.split(',')
-  // ['http://localhost:3000', 'http://localhost:5000', 'http://localhost:3300']
-}
 
 app.use(express.static('public'));
 app.use(express.static(__dirname));
