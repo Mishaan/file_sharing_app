@@ -1,38 +1,41 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-
-// this is for running the server ...
 const PORT = process.env.PORT || 3000;
 
 app.use(express.static('public'));
 app.use(express.static(__dirname));
-app.use(express.json());                   // this is for enabling that we are sending json data, as the server doesn't accept it by default
+app.use(express.json());
 
-// this is for building the database
+const cors = require('cors');
+// Cors
+// const corsOptions = {
+//   origin: process.env.ALLOWED_CLIENTS
+//   // ['http://localhost:3000', 'http://localhost:5000', 'http://localhost:3300']
+// }
+
+const corsOptions ={
+    origin:'*',
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200,
+ }
+
 const connectDB = require('./config/db');
 connectDB();
 
-// template engine
-// this will create the path for the views folder
+app.use(cors(corsOptions));
+
+// app.get('/', function (req, res) {
+//     res.sendFile(path.join(__dirname, '/index.html'));
+// });
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
 
-// Routes
 app.use('/api/files', require('./routes/files'));
 app.use('/files', require('./routes/show'));
 app.use('/files/download', require('./routes/download'));
 
+
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 })
-
-
-
-
-
-
-
-
-
-
